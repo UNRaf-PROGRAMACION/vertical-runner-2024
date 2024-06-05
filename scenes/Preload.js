@@ -10,6 +10,27 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 184,
       frameHeight: 325,
     });
+
+    this.load.audio("death", [
+      "../public/assets/sounds/death.mp3",
+      "../public/assets/sounds/death.ogg",
+    ]);
+    this.load.audio("run", [
+      "../public/assets/sounds/run.mp3",
+      "../public/assets/sounds/run.ogg",
+    ]);
+    this.load.audio("stick", [
+      "../public/assets/sounds/stick.mp3",
+      "../public/assets/sounds/stick.ogg",
+    ]);
+    this.load.audio("pick", [
+      "../public/assets/sounds/pick.mp3",
+      "../public/assets/sounds/pick.ogg",
+    ]);
+    this.load.audio("click", [
+      "../public/assets/sounds/click.mp3",
+      "../public/assets/sounds/click.ogg",
+    ]);
   }
 
   create() {
