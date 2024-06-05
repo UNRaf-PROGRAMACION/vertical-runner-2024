@@ -4,32 +4,32 @@ export default class Preload extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("sky", "../public/assets/images/skay.webp");
-    this.load.image("platform", "../public/assets/images/platform.png");
-    this.load.spritesheet("player", "../public/assets/images/player.png", {
+    this.load.image("sky", "./assets/images/skay.webp");
+    this.load.image("platform", "./assets/images/platform.png");
+    this.load.spritesheet("player", "./assets/images/player.png", {
       frameWidth: 184,
       frameHeight: 325,
     });
 
     this.load.audio("death", [
-      "../public/assets/sounds/death.mp3",
-      "../public/assets/sounds/death.ogg",
+      "./assets/sounds/death.mp3",
+      "./assets/sounds/death.ogg",
     ]);
     this.load.audio("run", [
-      "../public/assets/sounds/run.mp3",
-      "../public/assets/sounds/run.ogg",
+      "./assets/sounds/run.mp3",
+      "./assets/sounds/run.ogg",
     ]);
     this.load.audio("stick", [
-      "../public/assets/sounds/stick.mp3",
-      "../public/assets/sounds/stick.ogg",
+      "./assets/sounds/stick.mp3",
+      "./assets/sounds/stick.ogg",
     ]);
     this.load.audio("pick", [
-      "../public/assets/sounds/pick.mp3",
-      "../public/assets/sounds/pick.ogg",
+      "./assets/sounds/pick.mp3",
+      "./assets/sounds/pick.ogg",
     ]);
     this.load.audio("click", [
-      "../public/assets/sounds/click.mp3",
-      "../public/assets/sounds/click.ogg",
+      "./assets/sounds/click.mp3",
+      "./assets/sounds/click.ogg",
     ]);
   }
 
