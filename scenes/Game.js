@@ -1,4 +1,4 @@
-import { gameOptions, playSound, stopSound } from "../utils/gameOptions.js";
+import { gameOptions, playSound, stopSound, setHighScore, getHighScore } from "../utils/gameOptions.js";
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -52,33 +52,36 @@ export default class Game extends Phaser.Scene {
 
     if (this.player.y > this.game.config.height || this.player.y < 0) {
       this.gameOver = true;
+      const highScore = getHighScore();
       this.cameras.main.shake(200, 0.01);
       playSound(this.sounds.death, { delay: 0.5, volume: 0.5});
-      // pausar juego
       this.physics.pause();
-      // show game over title
       this.add
         .text(this.centerX, this.centerY, "Game Over", {
-          fontSize: "32px",
+          fontSize: "56px",
           fill: "#fff",
         })
         .setOrigin(0.5);
       // show final score
       this.add
-        .text(this.centerX, this.centerY + 50, `Score: ${this.score}`, {
-          fontSize: "32px",
+        .text(this.centerX, this.centerY + 80, `
+        Score: ${this.score}
+        High Score: ${highScore}
+        ${this.score>highScore ? "😀" : "😞"}`, {
+          fontSize: "44px",
           fill: "#fff",
         })
         .setOrigin(0.5);
       // show restart message
       this.add
-        .text(this.centerX, this.centerY + 100, "Click to restart", {
+        .text(this.centerX, this.centerY + 200, "Click to restart", {
           fontSize: "32px",
           fill: "#fff",
         })
         .setOrigin(0.5)
         .setInteractive()
         .on("pointerdown", () => {
+          setHighScore(this.score);
           this.scene.restart();
         });
         return;

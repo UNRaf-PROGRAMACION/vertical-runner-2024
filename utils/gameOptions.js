@@ -16,3 +16,18 @@ export function stopSound(sound) {
   sound.stop();
 }
 
+export function setHighScore(score) {
+  if (score > localStorage.getItem("highScore")) {
+    localStorage.setItem("highScore", score);
+  }
+}
+
+export function getHighScore() {
+  let highScore = localStorage.getItem("highScore");
+  if (highScore == null || highScore == undefined) {
+    highScore = 0;
+  } else {
+    highScore = parseInt(highScore);
+  }
+  return highScore;
+}
