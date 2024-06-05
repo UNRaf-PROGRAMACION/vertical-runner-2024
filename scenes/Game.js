@@ -12,50 +12,17 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
-    this.addBackground();
-
-    this.platformGroup = this.physics.add.group();
-
-    const positionX = this.game.config.width / 2;
+    const centerX = this.game.config.width / 2;
     const positionY =
       this.game.config.height * gameOptions.firstPlatformPosition;
-
-    const platform = this.platformGroup.create(
-      positionX,
-      positionY,
-      "platform"
-    );
-    platform.setScale(0.3, 1);
-    platform.setImmovable(true);
-
-    for (let i = 0; i < 10; i++) {
-      let platform = this.platformGroup.create(0, 0, "platform");
-      platform.setImmovable(true);
-      this.positionPlatform(platform);
-    }
-
-    this.player = this.physics.add.sprite(positionX, 0, "player");
-    this.player.setScale(0.2);
-    this.player.setGravityY(gameOptions.gameGravity);
+    
+    this.addBackground();
+    this.addPlatforms(centerX, positionY);
+    this.addUITexts(centerX);
+    this.addPlayer(centerX);
 
     this.input.on("pointerdown", this.movePlayer, this);
     this.input.on("pointerup", this.stopPlayer, this);
-
-    this.textTimer = this.add.text(10, 10, "0", {
-      fontSize: "32px",
-      fill: "#fff",
-    });
-
-    this.textScore = this.add.text(this.game.config.width - 10, 10, "0", {
-      fontSize: "32px",
-      fill: "#fff",
-    }).setOrigin(1, 0);
-
-    this.textFirstMove = this.add.text(positionX, 500, "Hace clic para empezar", {
-      fontSize: "32px",
-      fill: "#fff",
-    }).setOrigin(0.5,0)
-
 
     this.physics.add.collider(this.platformGroup, this.player, this.handleCollision, null, this);
   }
@@ -84,8 +51,52 @@ export default class Game extends Phaser.Scene {
     this.background.displayHeight = this.game.config.height;
   }
 
+  addPlatforms(positionX, positionY) {
+    this.platformGroup = this.physics.add.group();
+
+    const platform = this.platformGroup.create(
+      positionX,
+      positionY,
+      "platform"
+    );
+    platform.setScale(0.3, 1);
+    platform.setImmovable(true);
+
+    for (let i = 0; i < 10; i++) {
+      let platform = this.platformGroup.create(0, 0, "platform");
+      platform.setImmovable(true);
+      this.positionPlatform(platform);
+    }
+  }
+
+  addPlayer(positionX) {
+    this.player = this.physics.add.sprite(positionX, 0, "player");
+    this.player.setScale(0.2);
+    this.player.setGravityY(gameOptions.gameGravity);
+  }
+
+  addUITexts(positionX){
+    this.textTimer = this.add.text(10, 10, "0", {
+      fontSize: "32px",
+      fill: "#fff",
+    });
+
+    this.textScore = this.add.text(this.game.config.width - 10, 10, "0", {
+      fontSize: "32px",
+      fill: "#fff",
+    }).setOrigin(1, 0);
+
+    this.textFirstMove = this.add.text(positionX, 500, "Hace clic para empezar", {
+      fontSize: "32px",
+      fill: "#fff",
+    }).setOrigin(0.5,0)
+
+  }
+
   movePlayer(e) {
+    this.player.anims.play("run", false);
     const isClickedRight = e.x > this.game.config.width / 2;
+    this.player.flipX = !isClickedRight;
     const speedX = gameOptions.heroSpeed * (isClickedRight ? 1 : -1);
     this.player.setVelocityX(speedX);
 
@@ -99,6 +110,7 @@ export default class Game extends Phaser.Scene {
 
   stopPlayer() {
     this.player.setVelocityX(0);
+    this.player.anims.stop();
   }
 
   randomValue(a) {
